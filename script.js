@@ -1,46 +1,108 @@
-{\rtf1\ansi\ansicpg936\cocoartf2820
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+/* 随机生成的基础变量 */
+:root {
+    --primary-color: #0056BF;
+    --bg-dark: #1a1a1a;
+    --text-gray: #cccccc;
+    --grid-color: rgba(255, 255, 255, 0.05);
+}
 
-\f0\fs24 \cf0 // \uc0\u38543 \u26426 \u29983 \u25104 \u30340 \u21464 \u37327 \u21517 \
-const dateForm = document.querySelector('.dateForm');\
-const dateInput = document.querySelector('.dateInput');\
-const bgGrid = document.querySelector('.bgGrid');\
-\
-// \uc0\u27169 \u25311 \u26085 \u26399 \u21040 \u25991 \u20214 \u30340 \u26144 \u23556 \u65288 \u38656 \u26681 \u25454 \u23454 \u38469 \u24773 \u20917 \u22635 \u20805 \u65289 \
-const dateMap = \{\
-    '2023-09-15': 'abc123.html',\
-    '2023-09-16': 'def456.html'\
-\};\
-\
-// \uc0\u22788 \u29702 \u26085 \u26399 \u36755 \u20837 \
-dateForm.addEventListener('submit', function(e) \{\
-    e.preventDefault();\
-    const date = dateInput.value;\
-    \
-    if (dateMap[date]) \{\
-        window.location.href = `news/$\{dateMap[date]\}`;\
-    \} else \{\
-        alert('\uc0\u26410 \u25214 \u21040 \u30456 \u20851 \u26085 \u26399 \u30340 \u26032 \u38395 ');\
-    \}\
-\});\
-\
-// \uc0\u32593 \u26684 \u32972 \u26223 \u20132 \u20114 \
-document.addEventListener('mousemove', function(e) \{\
-    const x = (e.clientX / window.innerWidth) * 100 - 50;\
-    const y = (e.clientY / window.innerHeight) * 100 - 50;\
-    bgGrid.style.transform = `translate($\{x/5\}px, $\{y/5\}px)`;\
-\});\
-\
-// \uc0\u31105 \u29992 \u28378 \u21160 \
-window.addEventListener('wheel', function(e) \{\
-    e.preventDefault();\
-\}, \{ passive: false \});\
-\
-// \uc0\u38459 \u27490 \u35302 \u25720 \u35774 \u22791 \u30340 \u28378 \u21160 \
-window.addEventListener('touchmove', function(e) \{\
-    e.preventDefault();\
-\}, \{ passive: false \});}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    color: var(--text-gray);
+    font-family: 'Courier New', monospace;
+}
+
+.bgGrid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: translate(0, 0);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.3;
+    transition: transform 0.1s ease-out;
+}
+
+.contentWrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 800px;
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 2rem;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translate(-50%, -45%);}
+    to {opacity: 1; transform: translate(-50%, -50%);}
+}
+
+.siteHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.siteIcon {
+    width: 40px;
+    height: 40px;
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.dateForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dateInput {
+    padding: 0.5rem;
+    background: #222;
+    border: 1px solid var(--primary-color);
+    color: var(--text-gray);
+    font-size: 1.2rem;
+    transition: border-color 0.3s ease;
+}
+
+.dateInput:focus {
+    border-color: #00ffcc;
+    outline: none;
+}
+
+.submitBtn {
+    padding: 0.7rem;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submitBtn:hover {
+    background: #00ffcc;
+}
